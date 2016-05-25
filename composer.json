@@ -1,0 +1,21 @@
+{
+    "name": "alpineio/atlas",
+    "description": "WordPress custom post type manager",
+    "authors": [
+        {
+            "name": "Morgan O'Neal",
+            "email": "moneal@alpine.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AlpineIO\\Atlas\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.6.4",
+        "nesbot/carbon": "^1.21",
+        "illuminate/support": "^5.2",
+        "phpdocumentor/reflection-docblock": "^3.0"
+    }
+}
