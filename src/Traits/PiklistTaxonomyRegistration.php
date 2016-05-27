@@ -14,7 +14,8 @@ trait PiklistTaxonomyRegistration {
 			'post_type'         => static::getPostTypeSlugs(),
 			'name'              => static::getTaxonomy(),
 			'show_admin_column' => true,
-			'public'            => false,
+			'public'            => true,
+            'hierarchical'      => true,
 			'show_ui'           => true,
 			'configuration'     => array(
 				'hierarchical'  => true,
