@@ -15,7 +15,7 @@ trait PiklistPostRegistration  {
 		//dd(static::getPostType());
 		$postTypes[ static::getPostType() ] = array(
 			'labels'        => static::getLabels(),
-			'public'        => false,
+			'public'        => true,
 			'show_ui'       => true,
 			'rewrite'       => array(
 				'slug' => static::getSlug()
