@@ -86,7 +86,7 @@ class PiklistAutofields {
 		return false;
 	}
 	public static function removeJson(  $string ) {
-		return preg_replace('/{[\s\S]+?}/', '', $string);
+		return preg_replace('/{[\s\S]+?}$/', '', $string);
 	}
 
 	/**
