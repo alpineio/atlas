@@ -4,19 +4,19 @@
 namespace AlpineIO\Atlas\Traits;
 
 
-use Illuminate\Support\Str;
-
-trait PiklistPostRegistration  {
-	static function selfRegister(  ) {
-		add_filter('piklist_post_types', [ static::class, 'piklistPostTypeFilter']);
+trait PiklistPostRegistration {
+	static function selfRegister() {
+		add_filter( 'piklist_post_types', [ static::class, 'piklistPostTypeFilter' ] );
+		static::addFilters();
 	}
-	
+
 	public static function piklistPostTypeFilter( $postTypes ) {
 		//dd(static::getPostType());
 		$postTypes[ static::getPostType() ] = array(
 			'labels'        => static::getLabels(),
 			'public'        => true,
 			'show_ui'       => true,
+			'show_in_rest'  => true,
 			'rewrite'       => array(
 				'slug' => static::getSlug()
 			),
@@ -27,7 +27,7 @@ trait PiklistPostRegistration  {
 				'thumbnail',
 				'revisions'
 			),
-			'menu_icon' => static::$icon,
+			'menu_icon'     => static::$icon,
 			/*
 			'taxonomies' => [
 				'team'	
@@ -44,18 +44,19 @@ trait PiklistPostRegistration  {
 			),
 			*/
 		);
-		
-		return $postTypes;		
+
+		return $postTypes;
 	}
 
-	public static function getLabels(  ) {
-		if ( ! function_exists( 'piklist' )) {
+	public static function getLabels() {
+		if ( ! function_exists( 'piklist' ) ) {
 			// TODO some error or defaults
 		}
-		$labels = piklist( 'post_type_labels', ucwords(str_replace( '-', ' ', static::getPostType() ) ) );
-		if ( isset(static::$labels) ) {
-			return array_merge($labels, static::$labels );
+		$labels = piklist( 'post_type_labels', ucwords( str_replace( '-', ' ', static::getPostType() ) ) );
+		if ( isset( static::$labels ) ) {
+			return array_merge( $labels, static::$labels );
 		}
+
 		return $labels;
 	}
 }

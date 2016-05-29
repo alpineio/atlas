@@ -20,14 +20,31 @@ abstract class FieldType implements Field {
 	 * @return string
 	 */
 	public static function getFieldType() {
-		return static::$fieldType;	
+		return static::$fieldType;
 	}
 
 	/**
 	 * @param string $fieldType
 	 */
-	public static function setFieldType( $fieldType ) {
-		self::$fieldType = $fieldType;
+	public function setFieldType( $fieldType ) {
+		$this->fieldType = $fieldType;
+
+		return $this;
+	}
+
+	/**
+	 * @param $scope
+	 *
+	 * @return $this
+	 */
+	public function setScope( $scope ) {
+		$this->scope = $scope;
+
+		return $this;
+	}
+
+	public function getScope() {
+		return $this->scope;
 	}
 
 	/**

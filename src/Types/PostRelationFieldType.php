@@ -42,14 +42,9 @@ class PostRelationFieldType extends FieldType implements ScopedRelationship {
 		return $this;
 	}
 	
-	public function getScope() {
-		return $this->scope;
-	}
 	
-	public function setScope( $scope ) {
-		$this->scope = $scope;
-		return $this;
-	}
+
+	
 
 	public function __toString() {
 		return $this->post->post_title;

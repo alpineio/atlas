@@ -51,7 +51,11 @@ class PiklistAutofields {
 		$isScoped = static::isScopedRelationship($property);
 		if ( $isScoped ) {
 			$variableName = $property->getVariableName();
+<<<<<<< HEAD
+			$settings['scope'] = static::$object->getFieldType($variableName)->getScope();
+=======
 			$settings['scope'] = static::$object->$variableName->getScope();
+>>>>>>> 5b3c35d39ef1606aa4beb789f4fdeec433e873dd
 		}
 
 		$hasJson     = static::hasJsonString( (string) $description );
@@ -69,8 +73,12 @@ class PiklistAutofields {
 	
 	public static function isScopedRelationship( Property $property ) {
 		$variableName = $property->getVariableName();
+<<<<<<< HEAD
+		if(static::$object->getFieldType($variableName) instanceof ScopedRelationship) {
+=======
 		if(static::$object->$variableName instanceof ScopedRelationship) {
 			static::$object->$variableName->getScope();
+>>>>>>> 5b3c35d39ef1606aa4beb789f4fdeec433e873dd
 			return true;
 		}
 		return false;
@@ -98,8 +106,14 @@ class PiklistAutofields {
 	 */
 	public static function getFieldType( Property $property ) {
 		$variableName = $property->getVariableName();
+<<<<<<< HEAD
+		//dd(static::$object->getFieldType($variableName));
+		if ( static::$object->getFieldType($variableName) instanceof Field) {
+			return static::$object->getFieldType($variableName)->getFieldType();
+=======
 		if ( isset(static::$object->$variableName) && static::$object->$variableName instanceof Field) {
 			return static::$object->$variableName->getFieldType();
+>>>>>>> 5b3c35d39ef1606aa4beb789f4fdeec433e873dd
 		}
 		return 'text';
 	}

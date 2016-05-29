@@ -3,6 +3,7 @@
 
 namespace AlpineIO\Atlas\Abstracts;
 
+use AlpineIO\Atlas\Post;
 use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
@@ -32,6 +33,8 @@ abstract class AbstractPost {
 	 */
 	const UPDATED_AT = 'post_modified_gmt';
 
+	protected static $contentAutoAppend = true;
+	
 	public static $icon = 'dashicons-admin-site';
 
 	/**
@@ -181,7 +184,43 @@ abstract class AbstractPost {
 			$this->fill( array_merge( $defaults, $meta ) );
 		}
 	}
+	
+	public static function addFilters() {
+		if (static::$contentAutoAppend) {
+			add_filter( 'the_content', [ static::class, 'contentFilter'] );
+		}
+	}
 
+	public static function contentFilter( $content ) {
+		if ( is_singular( static::getPostType() ) ) {
+			return $content . static::getAppendContent(new static(get_the_ID()));
+		}
+		return $content;	
+	}
+
+	public static function getAppendContent( Post $object) {
+		if ( ! empty($object->toArray() ) ) {
+			$content = null;	
+			foreach($object->toArray() as $attribute => $value) {
+				// skip relates for now
+				if ( Str::startsWith($attribute, '__relate')) {
+					continue;	
+				}
+				
+				$content .= sprintf('<dt>%s</dt>', Str::title(str_replace('_', ' ', $attribute)));				
+				if ( is_array($value)) {
+					foreach ($value as $row ) {
+						$content .= sprintf('<dd>%s</dd>', $row);
+					}
+				} else {
+					$content .= sprintf('<dd>%s</dd>', $value);
+				}
+			}
+			return sprintf('<dl>%s</dl>', $content);
+		}	
+		
+	}
+	
 	/**
 	 * @return string
 	 */
@@ -197,6 +236,13 @@ abstract class AbstractPost {
 		return new \ReflectionClass( get_called_class() );
 	}
 
+	public function getFieldType( $field, $value = null ) {
+		$method = sprintf('get%sField', Str::studly($field));
+		if (method_exists($this,$method)) {
+			return $this->$method($value);
+		}
+	}
+	
 	/**
 	 * Fill the model with an array of attributes.
 	 *
