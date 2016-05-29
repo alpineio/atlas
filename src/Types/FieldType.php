@@ -14,13 +14,13 @@ abstract class FieldType implements Field {
 	/**
 	 * @var string
 	 */
-	protected static $fieldType = 'text';
+	protected $fieldType = 'text';
 
 	/**
 	 * @return string
 	 */
-	public static function getFieldType() {
-		return static::$fieldType;
+	public function getFieldType() {
+		return $this->fieldType;
 	}
 
 	/**
@@ -28,10 +28,8 @@ abstract class FieldType implements Field {
 	 */
 	public function setFieldType( $fieldType ) {
 		$this->fieldType = $fieldType;
-
 		return $this;
 	}
-
 	/**
 	 * @param $scope
 	 *
@@ -39,14 +37,12 @@ abstract class FieldType implements Field {
 	 */
 	public function setScope( $scope ) {
 		$this->scope = $scope;
-
 		return $this;
 	}
 
 	public function getScope() {
 		return $this->scope;
 	}
-
 	/**
 	 * Get the instance as an array.
 	 *
