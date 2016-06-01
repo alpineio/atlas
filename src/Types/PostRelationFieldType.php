@@ -8,7 +8,7 @@ use AlpineIO\Atlas\Contracts\ScopedRelationship;
 
 class PostRelationFieldType extends FieldType implements ScopedRelationship {
 
-	protected $fieldType = 'post-relate';
+	protected $fieldType = 'object-relate';
 
 	protected $scope = 'post';
 	protected $template = 'field';

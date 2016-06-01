@@ -495,6 +495,9 @@ abstract class AbstractPost {
 	 * @return Carbon
 	 */
 	protected function asDateTime( $value, $key = null ) {
+		if ( empty($value)) {
+			return;	
+		}
 		// If this value is already a Carbon instance, we shall just return it as is.
 		// This prevents us having to re-instantiate a Carbon instance when we know
 		// it already is one, which wouldn't be fulfilled by the DateTime check.
@@ -526,7 +529,10 @@ abstract class AbstractPost {
 		// the database connection and use that format to create the Carbon object
 		// that is returned back out to the developers after we convert it here.
 		$format = $this->getDateFormat( $key );
-		$date   = Carbon::createFromFormat( $format, $value );
+		$timezone = get_option('timezone_string');
+		//var_dump($format);
+		//var_dump($value);
+		$date   = Carbon::createFromFormat( $format, $value, $timezone );
 		// If date doesn't have hours then make it start of day
 		if ( empty( $date->hour ) ) {
 			return $date->startOfDay();
