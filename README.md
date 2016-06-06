@@ -1,6 +1,6 @@
 # atlas
 
-A Custom Post Type manager for WordPress.  Extends Piklist and native WordPress functionality.
+A Custom Post Type manager for WordPress. Extends Piklist and native WordPress functionality.
 
 ## Synopsis
 
@@ -24,7 +24,7 @@ applications".  We envision the same for Atlas in the WordPress ecosystem.
 
 Here is an example of an object being defined with a piklist-compatible data dictionary, and behavior inherited from posts.
 
-```
+```php
 namespace MyCRM;
 
 use AlpineIO\Atlas\Contracts\SelfRegistration;
@@ -52,7 +52,7 @@ class Contact extends Post implements SelfRegistration {
 
 Next, we might use this CPT Contact within a WordPress single template:
 
-```
+```php
   use MyCRM\Contact;
 
   $contact = new Contact(get_the_ID());
@@ -76,32 +76,37 @@ more modern object structure.  As users of Laravel, we missed the elegance and e
 
 ## Installation
 
-Install using composer as in the following:
+### With Composer
 
 ```
+$ composer require alpineio/atlas
+```
+
+```json
 {
-  "name": "alpine/MyCRM",
-  "description": "MyCRM App",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Morgan O'Neal",
-      "email": "moneal@alpine.io"
+    "require": {
+        "alpineio/atlas": "~1.0.4"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "SFF\\": "src/"
-    }
-  },
-  "require": {
-    "alpineio/atlas": "^1.0"
-  },
-  "require-dev": {
-    "symfony/var-dumper": "^3.0"
-  }
 }
+```
+
+```php
+<?php
+require 'vendor/autoload.php';
+use AlpineIO\Atlas\Services\RegisterWordPressTypes;
+use MyCRM\Contact;
+use MyCRM\Team;
+
+// Create a filter to return the classes
+function my_crm_object_types( $types = [] ) {
+	return array_merge( $types, [
+		Contact::class,
+		Team::class
+	] );
+}
+add_filter('alpineio_atlas_models', 'my_crm_object_types');
+
+RegisterWordPressTypes::register();
 ```
 
 ## Tests

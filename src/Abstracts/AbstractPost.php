@@ -162,13 +162,13 @@ abstract class AbstractPost {
 		if ( $object ) {
 
 			if ( is_numeric( $object ) ) {
-				$this->id   = absint( $object );
+				$this->id   = abs(intval( $object ));
 				$this->post = get_post( $this->id );
 			} elseif ( $object instanceof WP_Post ) {
-				$this->id   = absint( $object->id );
-				$this->post = $object->post;
+				$this->id   = abs(intval( $object->ID ));
+				$this->post = $object;
 			} elseif ( isset( $object->ID ) ) {
-				$this->id   = absint( $object->ID );
+				$this->id   = abs(intval( $object->ID ));
 				$this->post = $object;
 			}
 			if ( $this->post->post_type != $this->getPostType() ) {
@@ -584,8 +584,7 @@ abstract class AbstractPost {
 
 		$posts  = get_posts( [ 'post_type' => static::getPostType(), 'posts_per_page' => - 1 ] );
 		$object = static::class;
-
-		return array_map( function ( $post ) use ( $object ) {
+		return array_map( function ( WP_Post $post ) use ( $object ) {
 			// Late static binding does not work on WPE's version of php 5.5.9 in closures
 			//return self::newInstance($post);
 			//return new static($post);
