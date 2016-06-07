@@ -31,12 +31,16 @@ date_default_timezone_set( 'UTC' );
 
 Carbon::setTestNow( Carbon::now() );
 $settings = [
-	'DB_NAME' => 'wptest',
-	'DB_USER' => 'root',
-	'DB_PASSWORD' => 'secret',
-	'DB_HOST' => '127.0.0.1:33061',
+	'DB_NAME' => 'test',
+	'DB_USER' => getenv('MYSQL_USER') ?: 'root',
+	'DB_PASSWORD' => getenv('MYSQL_PASSWORD') ?: 'secret',
+	'DB_HOST' => '127.0.0.1',
 	'prefix' => 'wptests_',
 ];
+
+if ( ! getenv('CI')) {
+	$settings['DB_HOST'] = '127.0.0.1:33061';
+}
 
 // disable xdebug backtrace
 if ( function_exists( 'xdebug_disable' ) ) {
