@@ -7,6 +7,13 @@ namespace AlpineIO\Atlas\Abstracts;
 use AlpineIO\Atlas\Contracts\Reflectable;
 use Illuminate\Support\Str;
 
+/**
+ * Class AbstractTaxonomy
+ * @package AlpineIO\Atlas\Abstracts
+ * @property string $name;
+ * @property string $description;
+ * @property string $slug;
+ */
 abstract class AbstractTaxonomy implements Reflectable {
 
 	protected static $postTypes = [];
@@ -45,6 +52,11 @@ abstract class AbstractTaxonomy implements Reflectable {
 		}
 	}
 
+	/**
+	 * @param array $args
+	 *
+	 * @return self[]
+	 */
 	public static function all( $args = [] ) {
 		$default = [
 			'taxonomy' => static::getTaxonomy(),
@@ -141,5 +153,65 @@ abstract class AbstractTaxonomy implements Reflectable {
 		return false;
 	}
 
+	/**
+	 * Dynamically retrieve attributes on the model.
+	 *
+	 * @param  string $key
+	 *
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		return $this->getAttribute( $key );
+	}
+
+	/**
+	 * Get an attribute from the model.
+	 *
+	 * @param  string $key
+	 *
+	 * @return mixed
+	 */
+	public function getAttribute( $key ) {
+		if ( property_exists( $this->term, $key ) ) {
+			return $this->getAttributeValue( $key );
+		}
+
+		//return $this->getRelationValue($key);
+		return null;
+	}
+	/**
+	 * Determine if a get mutator exists for an attribute.
+	 *
+	 * @param  string $key
+	 *
+	 * @return bool
+	 */
+	public function hasGetMutator( $key ) {
+		return method_exists( $this, 'get' . Str::studly( $key ) . 'Attribute' );
+	}
+
+	/**
+	 * Get a plain attribute (not a relationship).
+	 *
+	 * @param  string $key
+	 *
+	 * @return mixed
+	 */
+	public function getAttributeValue( $key ) {
+		$value = $this->getAttributeFromArray( $key );
+		return $value;
+	}
+
+	protected function getAttributeFromArray( $key ) {
+		if ( property_exists( $this->term, $key ) ) {
+			return $this->term->$key;
+		}
+
+		return null;
+	}
+
+	public function getPermalink() {
+		return get_term_link($this->term, $this->getTaxonomy());
+	}
 
 }

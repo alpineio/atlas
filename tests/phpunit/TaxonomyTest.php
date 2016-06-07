@@ -27,6 +27,8 @@ class TaxonomyTest extends WP_UnitTestCase {
 		$this->assertInstanceOf( AbstractTaxonomy::class, $term );
 	}
 
+	
+
 	public function testTaxonomyAll() {
 		include_once 'samples/Team.php';
 		include_once 'samples/Person.php';
@@ -37,7 +39,9 @@ class TaxonomyTest extends WP_UnitTestCase {
 		register_taxonomy( Team::getTaxonomy(), Team::getPostTypes() );
 
 		for ( $i = 0; $i < $samples; $i ++ ) {
-			$termIds[] = wp_insert_term( $faker->word, Team::getTaxonomy() );
+			$t = self::factory()->term->create(['taxonomy' => Team::getTaxonomy()]);
+			clean_term_cache($t, Team::getTaxonomy());
+			//$termIds[] = wp_insert_term( $faker->word, Team::getTaxonomy() );
 		}
 
 		$teams = Team::all();
@@ -47,4 +51,18 @@ class TaxonomyTest extends WP_UnitTestCase {
 		}
 
 	}
+
+	/**
+	 * Test a taxonomy lookup with a empty result
+	 */
+	public function testTaxonomyAllEmpty() {
+		$this->reset_taxonomies();
+		include_once 'samples/Team.php';
+		include_once 'samples/Person.php';
+		register_taxonomy( Team::getTaxonomy(), Team::getPostTypes() );
+		$teams = Team::all();
+		$this->assertInternalType( 'array', $teams );
+		$this->assertCount( 0, $teams );
+	}
+	
 }
