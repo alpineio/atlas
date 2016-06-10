@@ -10,7 +10,6 @@ includes:
   - installation
   - models
   - custom_fields
-  - errors
 
 search: true
 ---
