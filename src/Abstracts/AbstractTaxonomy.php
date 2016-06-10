@@ -5,6 +5,7 @@ namespace AlpineIO\Atlas\Abstracts;
 
 
 use AlpineIO\Atlas\Contracts\Reflectable;
+use AlpineIO\Atlas\Traits\AttributeStorage;
 use Illuminate\Support\Str;
 
 /**
@@ -15,20 +16,24 @@ use Illuminate\Support\Str;
  * @property string $slug;
  */
 abstract class AbstractTaxonomy implements Reflectable {
+	
+	use AttributeStorage;
 
 	protected static $postTypes = [];
 	protected static $labels;
 	protected static $taxonomy;
 	protected static $settings = [ ];
+	protected static $unguarded = [];
+	protected $attributes = [];
 	protected $id;
 	protected $term;
 
-	public function __construct( $object ) {
+	public function __construct( $object = null ) {
 		if ( $object ) {
 
 			if ( is_numeric( $object ) ) {
 				$this->id   = abs(intval( $object ));
-				$this->term = get_term( $this->id );
+				$this->term = static::getTerm( $this->id );
 			} elseif ( $object instanceof WP_Term ) {
 				$this->id   = abs(intval( $object->ID ));
 				$this->term = $object;
@@ -40,15 +45,13 @@ abstract class AbstractTaxonomy implements Reflectable {
 				throw new \DomainException( 'Invalid taxonomy for this term. Can\'t assign taxonomy: '
 				                            . $this->term->taxonomy . ' to ' . get_class( $this ) );
 			}
-			/*
-			$meta     = get_post_meta( $this->id );
+			$meta     = get_term_meta( $this->id );
 			$defaults = [
-				'post_status' => $this->post->post_status,
-				'post_title'  => $this->post->post_title,
-				'post_type'   => $this->post->post_type,
+				'post_status' => $this->term->post_status,
+				'post_title'  => $this->term->post_title,
+				'post_type'   => $this->term->post_type,
 			];
 			$this->fill( array_merge( $defaults, $meta ) );
-			*/
 		}
 	}
 
@@ -172,7 +175,7 @@ abstract class AbstractTaxonomy implements Reflectable {
 	 * @return mixed
 	 */
 	public function getAttribute( $key ) {
-		if ( property_exists( $this->term, $key ) ) {
+		if ( property_exists( $this->term, $key )  || $this->hasGetMutator( $key ) ) {
 			return $this->getAttributeValue( $key );
 		}
 
@@ -199,7 +202,23 @@ abstract class AbstractTaxonomy implements Reflectable {
 	 */
 	public function getAttributeValue( $key ) {
 		$value = $this->getAttributeFromArray( $key );
+
+		if ( $this->hasGetMutator( $key ) ) {
+			return $this->mutateAttribute( $key, $value );
+		}
 		return $value;
+	}
+
+	/**
+	 * Get the value of an attribute using its mutator.
+	 *
+	 * @param  string $key
+	 * @param  mixed $value
+	 *
+	 * @return mixed
+	 */
+	protected function mutateAttribute( $key, $value ) {
+		return $this->{'get' . Str::studly( $key ) . 'Attribute'}( $value );
 	}
 
 	protected function getAttributeFromArray( $key ) {
@@ -209,9 +228,26 @@ abstract class AbstractTaxonomy implements Reflectable {
 
 		return null;
 	}
+	
+	
 
 	public function getPermalink() {
 		return get_term_link($this->term, $this->getTaxonomy());
 	}
 
+	public function getFieldType( $field, $value = null ) {
+		$method = sprintf('get%sField', Str::studly($field));
+		if (method_exists($this,$method)) {
+			return $this->$method($value);
+		}
+	}
+	public static function getTerm( $term, $taxonomy = null ) {
+		if (! function_exists('get_term')) {
+			return null;	
+		}
+		return get_term($term, $taxonomy);
+	}
+	
+	
+	
 }

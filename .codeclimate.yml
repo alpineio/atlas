@@ -21,4 +21,4 @@ ratings:
   - "**.php"
   - "**.py"
   - "**.rb"
-exclude_paths: []
+exclude_paths: ['/vendor', '.idea', '/spec']

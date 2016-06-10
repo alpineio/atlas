@@ -26,7 +26,6 @@ class TaxonomyTest extends WP_UnitTestCase {
 
 		$this->assertInstanceOf( AbstractTaxonomy::class, $term );
 	}
-
 	
 
 	public function testTaxonomyAll() {
@@ -64,5 +63,16 @@ class TaxonomyTest extends WP_UnitTestCase {
 		$this->assertInternalType( 'array', $teams );
 		$this->assertCount( 0, $teams );
 	}
+
+	public function testTaxonomyFill() {
+		$attributes = [
+			'foo' => 'bar',
+			'foo2' => 'bar2',
+		];
+		$term = new Team();
+		$term->fill($attributes);
+		//var_dump($term);
+	}
+
 	
 }

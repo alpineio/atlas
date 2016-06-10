@@ -9,8 +9,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "AlpineIO\\Atlas\\": "src/"
+            "AlpineIO\\Atlas\\": "src/",
+            "AlpineIO\\Atlas\\Tests\\": "tests/phpunit/"
         }
+    },
+    "config": {
+        "bin-dir": "bin"
     },
     "repositories": [
         {
@@ -41,6 +45,7 @@
         "phpunit/phpunit": "^5.3",
         "alpineio/wp-develop": "^4.5",
         "mockery/mockery": "^0.9.5",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "phpspec/phpspec": "^2.5"
     }
 }
