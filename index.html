@@ -1,0 +1,420 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Alpine.io Atlas Documentation</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/alpineio/atlas'>GitHub</a></li>
+            <li><a href='https://piklist.com/'>Piklist</a></li>
+            <li><a href='http://alpine.io'>alpine.io</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Atlas is a a custom post type manager for WordPress. Extends Piklist and native WordPress functionality.</p>
+
+<h2 id="synopsis">Synopsis</h2>
+
+<p>Piklist does a great job of adding datastructure to WordPress.  About Piklist:</p>
+
+<p>&ldquo;Piklist is a code-based framework, which means it has no user interface. We believe this is one of the biggest
+benefits to using Piklist. Code based systems allow you flexibility in your field configurations and development,
+and will save you time in the long run. With Piklist you can usually use the same code you have written in one
+section and use it in another, allowing you to copy and paste, and save tons of time.&rdquo;</p>
+
+<p>We agree with the benefits of a code-based, source-controlled application.   But, we feel that copy-paste is not
+a sustainable model for large-scale application development.</p>
+
+<p>Atlas is a layer over the copy/paste configuration model.   A convenient, object-oriented layer for adding
+basic and custom functionality to extended post types using a style similar to Laravel.</p>
+
+<p>As they say about Laravel, it is &ldquo;an accessible, yet powerful system, providing tools needed for large, robust
+applications&rdquo;.  We envision the same for Atlas in the WordPress ecosystem.</p>
+
+          <h1 id="installation">Installation</h1>
+
+<p>Installing Atlas is really easy with composer and currently the only way we
+recommend doing it.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>Atlas requires WordPress 4.5 and <a href="https://piklist.com/">Piklist</a> 9.9.8 for basic functionality.</p>
+
+<h2 id="composer">Composer</h2>
+<pre class="highlight shell"><code><span class="gp">$ </span>composer require alpineio/atlas
+</code></pre>
+
+<blockquote>
+<p>Your projects composer <code class="prettyprint">composer.json</code> will be updated to include atlas.</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACME/MyCRM"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"autoload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"psr-4"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"ACME\\MyCRM\\"</span><span class="p">:</span><span class="w"> </span><span class="s2">"src/"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"alpineio/atlas"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.0"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p><code class="prettyprint">ACME</code> and <code class="prettyprint">MyCRM</code> would be replaced with your specific namespace and project.</p>
+</blockquote>
+
+<p>User the composer command line to install the most recent composer package.</p>
+
+<h2 id="wordpress">WordPress</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Services\RegisterWordPressTypes</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">MyCRM\Contact</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">MyCRM\Team</span><span class="p">;</span>
+
+<span class="c1">// Create a filter to return the classes
+</span><span class="k">function</span> <span class="nf">my_crm_object_types</span><span class="p">(</span> <span class="nv">$types</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">array_merge</span><span class="p">(</span> <span class="nv">$types</span><span class="p">,</span> <span class="p">[</span>
+        <span class="nx">Contact</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">Team</span><span class="o">::</span><span class="na">class</span>
+    <span class="p">]</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">add_filter</span><span class="p">(</span><span class="s1">'alpineio_atlas_models'</span><span class="p">,</span> <span class="s1">'my_crm_object_types'</span><span class="p">);</span>
+
+<span class="nx">RegisterWordPressTypes</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+</code></pre>
+
+<p>You can add the composer autoloader to <code class="prettyprint">functions.php</code> or your theme in any file.</p>
+
+<p>The <a href="https://github.com/alpineio/atlas/blob/master/src/Services/RegisterWordPressTypes.php">RegisterWordPressTypes</a> class uses a filter called <code class="prettyprint">alpineio_atlas_models</code> to get a list of classes to add.
+These classes should implement the <a href="https://github.com/alpineio/atlas/blob/master/src/Contracts/SelfRegistration.php">SelfRegistration</a> interface.</p>
+
+<aside class="notice">
+You if loading in a hook it should be done before the <strong>????</strong> hook.
+</aside>
+
+          <h1 id="models">Models</h1>
+
+<p>Atlas uses models modeled after Laravel&rsquo;s excellent model class.</p>
+
+<h2 id="creating">Creating</h2>
+
+<p>Models are simple classes to help us get and set data for our post typesa.</p>
+
+<p>Models should be placed in place accessible by composers autoloader.</p>
+
+<aside class="notice">
+In our examples our classes are loaded form <code>/src</code> folder using <a href="http://www.php-fig.org/psr/psr-4/">PSR-4 Autoloading</a>
+</aside>
+
+<h2 id="custom-post-types">Custom Post Types</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// src/Contact.php
+</span><span class="k">namespace</span> <span class="nx">MyCRM</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Contracts\SelfRegistration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Post</span><span class="p">;</span>
+
+<span class="sd">/**
+ * Class Contact
+ */</span>
+<span class="k">class</span> <span class="nc">Contact</span> <span class="k">extends</span> <span class="nx">Post</span> <span class="k">implements</span> <span class="nx">SelfRegistration</span> <span class="p">{</span>
+
+    <span class="k">use</span> <span class="nx">PiklistPostRegistration</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre>
+
+<p>This is a example creating a CPT called Contact. Atlas takes sets all the defaults from this including labels and slugs.</p>
+
+<aside class="notice">
+All CPT and taxonomy classes should be singular names. Atlas assumes this and sets the plurar variations for us. If needed this can
+over written.
+</aside>
+
+<h2 id="taxonomies">Taxonomies</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// src/Team.php
+</span><span class="k">namespace</span> <span class="nx">ACME\MyCRM</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Abstracts\AbstractTaxonomy</span><span class="p">;</span>
+
+<span class="sd">/**
+ * Class Team
+ */</span>
+<span class="k">class</span> <span class="nc">Team</span> <span class="k">extends</span> <span class="nx">AbstractTaxonomy</span> <span class="p">{</span>
+    <span class="k">protected</span> <span class="k">static</span> <span class="nv">$postTypes</span> <span class="o">=</span> <span class="p">[</span><span class="nx">Team</span><span class="o">::</span><span class="na">class</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Creating a custom taxonomy is ver similar to creating a CPT only you must add an array of all the post type classes.</p>
+
+<p>*[CPT]: Custom Post Type</p>
+
+          <h1 id="custom-fields">Custom Fields</h1>
+
+<p>Custom fields can be added to CPTs and taxonomies via doc block comments on the class. The dox blocks follow the standard
+format for PHP Documented with the extra values set via JSON like WordPress&rsquo;s comments. The extra JSON data can be used
+override any generated value.</p>
+
+<aside class="error">
+Any error in the JSON results in a silent error and the field reverts the a standard text field. This includes having a
+extra comma at the end of a property listing.
+</aside>
+
+<h2 id="basic-fields">Basic Fields</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// src/Contact.php
+</span><span class="k">namespace</span> <span class="nx">MyCRM</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Contracts\SelfRegistration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Post</span><span class="p">;</span>
+<span class="sd">/**
+ * string $profileImage Profile Image
+ * string $firstName First Name
+ * string $lastName Last Name
+ */</span>
+ <span class="k">class</span> <span class="nc">Team</span> <span class="k">extends</span> <span class="nx">Post</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span> <span class="p">}</span>
+</code></pre>
+
+<p>Adding a standard Doc Block comment describes how the data is going to be accessed from the model. The first parameter is
+the type of data being returned. The second is the variable used and the third is the description. The description is
+used by Piklist for the field label.</p>
+
+<p>Strings are the standard return type but other types can be used as well but require using a Atlas Field interface class.</p>
+
+<h2 id="advanced-fields">Advanced Fields</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// src/Contact.php
+</span><span class="k">namespace</span> <span class="nx">MyCRM</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Contracts\SelfRegistration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Post</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Types\PhotoFieldType</span><span class="p">;</span>
+<span class="sd">/**
+ * PhotoField $profileImage Profile Image
+ * string $firstName First Name
+ * string $lastName Last Name
+ */</span>
+ <span class="k">class</span> <span class="nc">Team</span> <span class="k">extends</span> <span class="nx">Post</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">getProfileImageAttribute</span><span class="p">(</span> <span class="nv">$value</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">PhotoFieldType</span><span class="p">(</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$this</span> <span class="p">);</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre>
+
+<p>Advanced fields can be used to return more complex results. These advanced fields require a corresponding getter method
+in the model.</p>
+
+<h2 id="field-types">Field Types</h2>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// src/Contact.php
+</span><span class="k">namespace</span> <span class="nx">MyCRM</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Contracts\SelfRegistration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">AlpineIO\Atlas\Post</span><span class="p">;</span>
+<span class="sd">/**
+ * string $file Image of contact
+ */</span>
+ <span class="k">class</span> <span class="nc">Team</span> <span class="k">extends</span> <span class="nx">Post</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span> <span class="p">}</span>
+</code></pre>
+
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>file</td>
+<td>File Upload</td>
+</tr>
+<tr>
+<td>string</td>
+<td>Text Field</td>
+</tr>
+<tr>
+<td>PhotoField</td>
+<td>Photo helper class with extra method to make getting data about the image easier.</td>
+</tr>
+</tbody></table>
+
+          <h1 id="errors">Errors</h1>
+
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
+
+<p>The Kittn API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Your request sucks</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Your API key is wrong</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The specified kitten could not be found</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone &ndash; The kitten requested has been removed from our servers</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&rsquo;m a teapot</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
