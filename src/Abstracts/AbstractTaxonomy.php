@@ -36,7 +36,6 @@ abstract class AbstractTaxonomy implements Reflectable {
 	protected static $taxonomy;
 	protected static $settings = [ ];
 	protected static $unguarded = [];
-	protected static $attributes = [];
 	protected $id;
 	protected $term;
 
