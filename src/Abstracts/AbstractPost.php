@@ -200,25 +200,38 @@ abstract class AbstractPost {
 
 	public static function getAppendContent( Post $object) {
 		if ( ! empty($object->toArray() ) ) {
-			$content = null;	
-			foreach($object->toArray() as $attribute => $value) {
+			$fields = collect($object->toArray());
+			return self::generateContentFromArray( $fields );
+		}
+	}
+	
+	public static function generateContentFromArray( $fields, $showEmpty = true ) {
+		if ( ! empty($fields) ) {
+			$content = null;
+			foreach($fields as $attribute => $value) {
 				// skip relates for now
 				if ( Str::startsWith($attribute, '__relate')) {
+					//continue;
+				}
+				if ( empty($value) && ! $showEmpty ) {
 					continue;	
 				}
-				
-				$content .= sprintf('<dt>%s</dt>', Str::title(str_replace('_', ' ', $attribute)));				
+
+				$content .= sprintf('<dt>%s</dt>', Str::title(str_replace('_', ' ', $attribute)));
 				if ( is_array($value)) {
 					foreach ($value as $row ) {
-						$content .= sprintf('<dd>%s</dd>', $row);
+						if ( is_string( $row )) {
+							$content .= sprintf('<dd>%s</dd>', $row);
+						} else {
+							$content .= sprintf('<dd>%s</dd>', gettype( $row ));
+						}
 					}
 				} else {
 					$content .= sprintf('<dd>%s</dd>', $value);
 				}
 			}
 			return sprintf('<dl>%s</dl>', $content);
-		}	
-		
+		}
 	}
 	
 	/**
@@ -584,12 +597,12 @@ abstract class AbstractPost {
 
 		$posts  = get_posts( [ 'post_type' => static::getPostType(), 'posts_per_page' => - 1 ] );
 		$object = static::class;
-		return array_map( function ( WP_Post $post ) use ( $object ) {
+		return collect(array_map( function ( WP_Post $post ) use ( $object ) {
 			// Late static binding does not work on WPE's version of php 5.5.9 in closures
 			//return self::newInstance($post);
 			//return new static($post);
 			return new $object( $post );
-		}, $posts );
+		}, $posts ));
 	}
 
 	/**

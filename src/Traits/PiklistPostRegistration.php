@@ -4,6 +4,8 @@
 namespace AlpineIO\Atlas\Traits;
 
 
+use Illuminate\Support\Str;
+
 trait PiklistPostRegistration {
 	static function selfRegister() {
 		add_filter( 'piklist_post_types', [ static::class, 'piklistPostTypeFilter' ] );
@@ -17,8 +19,9 @@ trait PiklistPostRegistration {
 			'public'        => true,
 			'show_ui'       => true,
 			'show_in_rest'  => true,
+			'has_archive'   => true,
 			'rewrite'       => array(
-				'slug' => static::getSlug()
+				'slug'      => Str::plural( static::getSlug() )
 			),
 			'supports'      => array(
 				'title',

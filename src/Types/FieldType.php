@@ -5,6 +5,7 @@ namespace AlpineIO\Atlas\Types;
 
 
 use AlpineIO\Atlas\Contracts\Field;
+use AlpineIO\Atlas\Post;
 
 /**
  * Class FieldType
@@ -14,7 +15,29 @@ abstract class FieldType implements Field {
 	/**
 	 * @var string
 	 */
-	protected $fieldType = 'text';
+	protected  $fieldType = 'text';
+	/**
+	 * @var Post
+	 */
+	protected $parent;
+
+	/**
+	 * @return mixed
+	 */
+	public function getParent() {
+		return $this->parent;
+	}
+
+	/**
+	 * @param mixed $parent
+	 *
+	 * @return FieldType
+	 */
+	public function setParent( $parent ) {
+		$this->parent = $parent;
+
+		return $this;
+	}
 
 	/**
 	 * @return string
@@ -22,6 +45,7 @@ abstract class FieldType implements Field {
 	public function getFieldType() {
 		return $this->fieldType;
 	}
+	
 
 	/**
 	 * @param string $fieldType
